@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>生成二维码</title>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <!--
+    jQuery官网文件不支持logo,不支持中文
+  <script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+  jQuery('#qrcode').qrcode(utf16to8("众里寻她千百度，蓦然回首，那人却在灯火阑珊处!"));
+  -->
+  <script type="text/javascript" src="js/jquery.qrcode.logo.js"></script>
+  <!-- 第一种jQuery位置
+  <script>
+    jQuery(function(){
+      jQuery('#qrcode').qrcode("http://www.baidu.com");
+    })
+    jQuery('#qrcode_me').qrcode({width: 100,height: 100,text: "http://newbeedaly.github.io"});
+  </script>
+   -->
+</head>
+<body>
+  <h2>生成二维码</h2>
+  <div id="qrcode"></div>
+  <hr>
+  <div id="qrcode_me"></div>
+  <hr>
+  <div id="container"></div>
+  <hr>
+  <!--
+    <img id="imgs" src="img/logo.jpg">
+  -->
+  <!-- 第二种jQuery位置 -->
+  <script type="text/javascript">
+    jQuery('#qrcode').qrcode("众里寻她千百度，蓦然回首，那人却在灯火阑珊处!");
+    
+    jQuery('#qrcode_me').qrcode(
+      {
+        render:"canvas", // 设置渲染方式，有table和canvas两种，canvas比较好
+        ecLevel: 'H',//识别度
+        width: 300, // 二维码的宽度
+        height: 300,// 二维码的高度
+        text: "http://newbeedaly.github.io",// 二维码的内容
+        backgroup:"#ffffff", // 二维码的背景颜色
+        foregroud:"#000000", // 二维码的前景颜色
+        src: 'img/logo.jpg'  // 二维码中间的图片
+      }
+    );
+
+   $(function(){
+      var options = {
+        render:"canvas", // 设置渲染方式，有table和canvas两种，canvas比较好
+        ecLevel: 'H',//识别度
+        width: 300, // 二维码的宽度
+        height: 300,// 二维码的高度
+        text: "http://newbeedaly.github.io",// 二维码的内容
+        backgroup:"#ffffff", // 二维码的背景颜色
+        foregroud:"#000000", // 二维码的前景颜色
+        src: 'img/logo.jpg'  // 二维码中间的图片
+      };
+      $('#container').empty().qrcode(options);
+  })
+
+   /*
+    定义方法：
+    jquery.qrcode 对中文字符的支持
+   */
+  function utf16to8(str) {
+    var out, i, len, c;
+    out = "";
+    len = str.length;
+    for (i = 0; i < len; i++) {
+        c = str.charCodeAt(i);
+        if ((c >= 0x0001) && (c <= 0x007F)) {
+            out += str.charAt(i);
+        } else if (c > 0x07FF) {
+            out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+            out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        } else {
+            out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+            out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+        }
+    }
+    return out;
+  };
+  </script>
+</body>
+</html>
